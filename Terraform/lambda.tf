@@ -1,3 +1,17 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.27"
+    }
+  }
+}
+
+provider "aws" {
+  profile = "default"
+  region  = "eu-west-1"
+}
+
 variable "function_name" { default = "mytestlambda" }
 variable "handler" { default = "lambda.lambda_handler" }
 variable "runtime" { default = "python3.8" }
