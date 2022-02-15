@@ -88,7 +88,7 @@ resource "aws_lambda_permission" "test" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda_function.arn
   principal     = "s3.amazonaws.com"
-  source_arn    = "arn:aws:s3:::uploads-imca2"
+  source_arn    = aws_s3_bucket.upload_bucket.arn
 }
 
 
