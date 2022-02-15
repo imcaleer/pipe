@@ -53,10 +53,6 @@ resource "aws_lambda_function" "lambda_function" {
 
 resource "aws_s3_bucket" "upload_bucket" {
   bucket = "imca-source-2"
-
-  depends_on = [
-    aws_s3_bucket.lambda_bucket
-  ]
 }
 
 resource "aws_s3_bucket_notification" "my-trigger" {
@@ -67,10 +63,6 @@ resource "aws_s3_bucket_notification" "my-trigger" {
     events              = ["s3:ObjectCreated:*"]
     filter_suffix       = ".json"
   }
-  depends_on = [
-    aws_s3_bucket.upload_bucket
-  ]
-
 }
 
 resource "aws_dynamodb_table" "basic-dynamodb-table" {
