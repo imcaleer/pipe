@@ -14,6 +14,7 @@ phases:
 
   build:
     commands:
+      - zip lambda.zip lambda.py
       - terraform -chdir=Terraform $TF_COMMAND_P -input=false -no-color
 
   post_build:
