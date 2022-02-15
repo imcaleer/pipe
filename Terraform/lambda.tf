@@ -35,11 +35,6 @@ resource "aws_s3_bucket_object" "zipit" {
 
   etag = filemd5(data.archive_file.zipit.output_path)
 
-  depends_on = [
-    archive_file.zipit,
-    aws_s3_bucket.lambda_bucket
-  ]
-
 
 }
 
