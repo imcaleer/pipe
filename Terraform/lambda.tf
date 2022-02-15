@@ -16,15 +16,16 @@ variable "function_name" { default = "mytestlambda" }
 variable "handler" { default = "lambda.lambda_handler" }
 variable "runtime" { default = "python3.8" }
 
+resource "aws_s3_bucket" "lambda_bucket" {
+  bucket = "uploads-imca-lambda-2"
+}
+
 data "archive_file" "zipit" {
   type        = "zip"
   source_file = "${path.module}/lambda.py"
   output_path = "${path.module}/lambda.zip"
 }
 
-resource "aws_s3_bucket" "lambda_bucket" {
-  bucket = "uploads-imca-lambda"
-}
 
 resource "aws_s3_bucket_object" "zipit" {
   bucket = aws_s3_bucket.lambda_bucket.id
@@ -33,6 +34,13 @@ resource "aws_s3_bucket_object" "zipit" {
   source = data.archive_file.zipit.output_path
 
   etag = filemd5(data.archive_file.zipit.output_path)
+
+  depends_on = [
+    archive_file.zipit,
+    aws_s3_bucket.lambda_bucket
+  ]
+
+
 }
 
 resource "aws_lambda_function" "lambda_function" {
