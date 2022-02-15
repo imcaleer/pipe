@@ -63,6 +63,10 @@ resource "aws_s3_bucket_notification" "my-trigger" {
     events              = ["s3:ObjectCreated:*"]
     filter_suffix       = ".json"
   }
+
+  depends_on = [
+    aws_lambda_function.lambda_function
+  ]
 }
 
 resource "aws_dynamodb_table" "basic-dynamodb-table" {
