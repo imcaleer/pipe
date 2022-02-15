@@ -86,11 +86,18 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
 resource "aws_lambda_permission" "test" {
   statement_id  = "AllowS3Invoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.lambda_function.arn
+  function_name = aws_lambda_function.lambda_function.function_name
   principal     = "s3.amazonaws.com"
   source_arn    = aws_s3_bucket.upload_bucket.arn
+  qualifier     = aws_lambda_alias.test_alias.name
 }
 
+resource "aws_lambda_alias" "test_alias" {
+  name             = "testalias"
+  description      = "a sample description"
+  function_name    = aws_lambda_function.lambda_function.function_name
+  function_version = "$LATEST"
+}
 
 
 resource "aws_iam_role" "iam_for_lambda" {
