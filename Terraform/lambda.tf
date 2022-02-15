@@ -52,7 +52,7 @@ resource "aws_lambda_function" "lambda_function" {
 }
 
 resource "aws_s3_bucket" "upload_bucket" {
-  bucket = "uploads-imca2"
+  bucket = "imca-source-2"
 
   depends_on = [
     aws_s3_bucket.lambda_bucket
