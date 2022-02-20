@@ -50,13 +50,19 @@ resource "aws_s3_bucket" "upload_bucket" {
 }
 
 resource "aws_s3_bucket_notification" "my-trigger" {
-  bucket = aws_s3_bucket.upload_bucket.bucket
+  bucket = aws_s3_bucket.upload_bucket.id
 
   lambda_function {
     lambda_function_arn = aws_lambda_function.lambda_function.arn
     events              = ["s3:ObjectCreated:*"]
     filter_suffix       = ".json"
   }
+
+  depends_on = [
+    aws_s3_bucket.upload_bucket,
+    aws_lambda_function.lambda_function,
+    aws_lambda_permission.test
+  ]
 }
 
 resource "aws_lambda_permission" "test" {
