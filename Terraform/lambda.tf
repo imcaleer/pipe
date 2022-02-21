@@ -68,7 +68,7 @@ resource "aws_s3_bucket_notification" "my-trigger" {
 resource "aws_lambda_permission" "test" {
   statement_id  = "AllowS3Invoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.lambda_function.arn
+  function_name = aws_lambda_function.lambda_function.function_name
   principal     = "s3.amazonaws.com"
   source_arn    = aws_s3_bucket.upload_bucket.arn
 }
